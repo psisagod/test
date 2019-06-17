@@ -3,6 +3,7 @@ package io.ps.blockexplorer0614.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import io.ps.blockexplorer0614.api.BitcoinJsonRpcClient;
+import io.ps.blockexplorer0614.api.BitcoinJsonRpcClientAPI;
 import io.ps.blockexplorer0614.api.BlockExplorerAPI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -16,30 +17,30 @@ public class BlockController {
     @Autowired
     private BlockExplorerAPI blockExplorerAPI;
     @Autowired
-    private BitcoinJsonRpcClient bitcoinJsonRpcClient;
+    private BitcoinJsonRpcClientAPI bitcoinJsonRpcClientAPI;
 
     @GetMapping("/getBestblockHash")
     public String getBestblockHash() throws Throwable {
-        return bitcoinJsonRpcClient.getBestblockHash();
+        return bitcoinJsonRpcClientAPI.getBestblockHash();
     }
 
     @GetMapping("/getBlockHashByHeight")
     public String getBlockHashByHeight(Integer blockHeight) throws Throwable {
-        return bitcoinJsonRpcClient.getBlockHashByHeight(blockHeight);
+        return bitcoinJsonRpcClientAPI.getBlockHashByHeight(blockHeight);
     }
 
     @GetMapping("/getAddressInfo")
     public JSONObject getAddressInfo(String address) throws Throwable {
-        return bitcoinJsonRpcClient.getAddressInfo(address);
+        return bitcoinJsonRpcClientAPI.getAddressInfo(address);
     }
     @GetMapping("/getBalance")
     public Double getBalance(String address) throws Throwable {
-        return bitcoinJsonRpcClient.getBalance(address);
+        return bitcoinJsonRpcClientAPI.getBalance(address);
     }
 
     @GetMapping("/getRawTransaxtion")
     public JSONObject getRawTransaxtion(String txid) throws Throwable {
-        return bitcoinJsonRpcClient.getRawTransaxtion(txid);
+        return bitcoinJsonRpcClientAPI.getRawTransaxtion(txid);
     }
     //--------------------------------------------------------------------------------------------
     @GetMapping("/getChainInfo")

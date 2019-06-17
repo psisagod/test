@@ -11,7 +11,7 @@ import java.util.Base64;
 import java.util.HashMap;
 
 @Service
-public class BitcoinJsonRpcClient {
+public class BitcoinJsonRpcClient implements BitcoinJsonRpcClientAPI{
     private JsonRpcHttpClient jsonRpcHttpClient;
 
     public BitcoinJsonRpcClient() throws MalformedURLException {
@@ -29,7 +29,7 @@ public class BitcoinJsonRpcClient {
         return blockhash;
     }
 
-    public String getBlockHashByHeight(Integer blockHeight) throws Throwable {
+    public String getBlockHashByHeight(Integer blockHeight)  throws Throwable {
         String blockhash = jsonRpcHttpClient.invoke("getblockhash", new Integer[]{blockHeight}, String.class);
         return blockhash;
     }
