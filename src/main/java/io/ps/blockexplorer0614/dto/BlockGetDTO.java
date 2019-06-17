@@ -12,6 +12,7 @@ public class BlockGetDTO {
     private Long time;
     private Double difficulty;
     private Integer size;
+    private Integer number_of_transactions;
 
     public String getBlockhash() {
         return blockhash;
@@ -99,5 +100,13 @@ public class BlockGetDTO {
 
     public void setSize(Integer size) {
         this.size = size;
+    }
+
+    public Integer getNumber_of_transactions() {
+        return number_of_transactions;
+    }
+
+    public void setNumber_of_transactions(Integer number_of_transactions) {
+        this.number_of_transactions = number_of_transactions;
     }
 }

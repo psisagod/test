@@ -9,9 +9,11 @@ public class BlockListDTO {
 
     private Date time;
 
-    private Short txsize;
+    private Integer confirmations;
 
     private Integer size;
+
+    private Short txsize;
 
     public String getBlockhash() {
         return blockhash;
@@ -37,12 +39,12 @@ public class BlockListDTO {
         this.time = time;
     }
 
-    public Short getTxsize() {
-        return txsize;
+    public Integer getConfirmations() {
+        return confirmations;
     }
 
-    public void setTxsize(Short txsize) {
-        this.txsize = txsize;
+    public void setConfirmations(Integer confirmations) {
+        this.confirmations = confirmations;
     }
 
     public Integer getSize() {
@@ -51,5 +53,13 @@ public class BlockListDTO {
 
     public void setSize(Integer size) {
         this.size = size;
+    }
+
+    public Short getTxsize() {
+        return txsize;
+    }
+
+    public void setTxsize(Short txsize) {
+        this.txsize = txsize;
     }
 }
