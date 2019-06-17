@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.ps.blockexplorer0614.dao.TransacationMapper">
+  <resultMap id="BaseResultMap" type="io.ps.blockexplorer0614.po.Transacation">
+    <id column="transacation_id" jdbcType="INTEGER" property="transacationId" />
+    <result column="txhash" jdbcType="CHAR" property="txhash" />
+    <result column="time" jdbcType="TIMESTAMP" property="time" />
+    <result column="amout" jdbcType="DOUBLE" property="amout" />
+    <result column="size" jdbcType="INTEGER" property="size" />
+    <result column="weight" jdbcType="REAL" property="weight" />
+    <result column="blockhash" jdbcType="CHAR" property="blockhash" />
+    <result column="confirmations" jdbcType="INTEGER" property="confirmations" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    transacation_id, txhash, time, amout, size, weight, blockhash, confirmations
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from transacation
+    where transacation_id = #{transacationId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from transacation
+    where transacation_id = #{transacationId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="io.ps.blockexplorer0614.po.Transacation">
+    insert into transacation (transacation_id, txhash, time, 
+      amout, size, weight, blockhash, 
+      confirmations)
+    values (#{transacationId,jdbcType=INTEGER}, #{txhash,jdbcType=CHAR}, #{time,jdbcType=TIMESTAMP}, 
+      #{amout,jdbcType=DOUBLE}, #{size,jdbcType=INTEGER}, #{weight,jdbcType=REAL}, #{blockhash,jdbcType=CHAR}, 
+      #{confirmations,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="io.ps.blockexplorer0614.po.Transacation">
+    insert into transacation
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="transacationId != null">
+        transacation_id,
+      </if>
+      <if test="txhash != null">
+        txhash,
+      </if>
+      <if test="time != null">
+        time,
+      </if>
+      <if test="amout != null">
+        amout,
+      </if>
+      <if test="size != null">
+        size,
+      </if>
+      <if test="weight != null">
+        weight,
+      </if>
+      <if test="blockhash != null">
+        blockhash,
+      </if>
+      <if test="confirmations != null">
+        confirmations,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="transacationId != null">
+        #{transacationId,jdbcType=INTEGER},
+      </if>
+      <if test="txhash != null">
+        #{txhash,jdbcType=CHAR},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="amout != null">
+        #{amout,jdbcType=DOUBLE},
+      </if>
+      <if test="size != null">
+        #{size,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null">
+        #{weight,jdbcType=REAL},
+      </if>
+      <if test="blockhash != null">
+        #{blockhash,jdbcType=CHAR},
+      </if>
+      <if test="confirmations != null">
+        #{confirmations,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="io.ps.blockexplorer0614.po.Transacation">
+    update transacation
+    <set>
+      <if test="txhash != null">
+        txhash = #{txhash,jdbcType=CHAR},
+      </if>
+      <if test="time != null">
+        time = #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="amout != null">
+        amout = #{amout,jdbcType=DOUBLE},
+      </if>
+      <if test="size != null">
+        size = #{size,jdbcType=INTEGER},
+      </if>
+      <if test="weight != null">
+        weight = #{weight,jdbcType=REAL},
+      </if>
+      <if test="blockhash != null">
+        blockhash = #{blockhash,jdbcType=CHAR},
+      </if>
+      <if test="confirmations != null">
+        confirmations = #{confirmations,jdbcType=INTEGER},
+      </if>
+    </set>
+    where transacation_id = #{transacationId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="io.ps.blockexplorer0614.po.Transacation">
+    update transacation
+    set txhash = #{txhash,jdbcType=CHAR},
+      time = #{time,jdbcType=TIMESTAMP},
+      amout = #{amout,jdbcType=DOUBLE},
+      size = #{size,jdbcType=INTEGER},
+      weight = #{weight,jdbcType=REAL},
+      blockhash = #{blockhash,jdbcType=CHAR},
+      confirmations = #{confirmations,jdbcType=INTEGER}
+    where transacation_id = #{transacationId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.ps.blockexplorer0614.dao.BlockMapper">
+  <resultMap id="BaseResultMap" type="io.ps.blockexplorer0614.po.Block">
+    <id column="block_id" jdbcType="INTEGER" property="blockId" />
+    <result column="blockhash" jdbcType="CHAR" property="blockhash" />
+    <result column="height" jdbcType="INTEGER" property="height" />
+    <result column="time" jdbcType="TIMESTAMP" property="time" />
+    <result column="txSize" jdbcType="SMALLINT" property="txsize" />
+    <result column="size" jdbcType="INTEGER" property="size" />
+    <result column="difficulty" jdbcType="DOUBLE" property="difficulty" />
+    <result column="weight" jdbcType="REAL" property="weight" />
+    <result column="next_block" jdbcType="CHAR" property="nextBlock" />
+    <result column="prev_block" jdbcType="CHAR" property="prevBlock" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    block_id, blockhash, height, time, txSize, size, difficulty, weight, next_block, 
+    prev_block
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from block
+    where block_id = #{blockId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from block
+    where block_id = #{blockId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="io.ps.blockexplorer0614.po.Block">
+    insert into block (block_id, blockhash, height, 
+      time, txSize, size, 
+      difficulty, weight, next_block, 
+      prev_block)
+    values (#{blockId,jdbcType=INTEGER}, #{blockhash,jdbcType=CHAR}, #{height,jdbcType=INTEGER}, 
+      #{time,jdbcType=TIMESTAMP}, #{txsize,jdbcType=SMALLINT}, #{size,jdbcType=INTEGER}, 
+      #{difficulty,jdbcType=DOUBLE}, #{weight,jdbcType=REAL}, #{nextBlock,jdbcType=CHAR}, 
+      #{prevBlock,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="io.ps.blockexplorer0614.po.Block">
+    insert into block
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="blockId != null">
+        block_id,
+      </if>
+      <if test="blockhash != null">
+        blockhash,
+      </if>
+      <if test="height != null">
+        height,
+      </if>
+      <if test="time != null">
+        time,
+      </if>
+      <if test="txsize != null">
+        txSize,
+      </if>
+      <if test="size != null">
+        size,
+      </if>
+      <if test="difficulty != null">
+        difficulty,
+      </if>
+      <if test="weight != null">
+        weight,
+      </if>
+      <if test="nextBlock != null">
+        next_block,
+      </if>
+      <if test="prevBlock != null">
+        prev_block,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="blockId != null">
+        #{blockId,jdbcType=INTEGER},
+      </if>
+      <if test="blockhash != null">
+        #{blockhash,jdbcType=CHAR},
+      </if>
+      <if test="height != null">
+        #{height,jdbcType=INTEGER},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="txsize != null">
+        #{txsize,jdbcType=SMALLINT},
+      </if>
+      <if test="size != null">
+        #{size,jdbcType=INTEGER},
+      </if>
+      <if test="difficulty != null">
+        #{difficulty,jdbcType=DOUBLE},
+      </if>
+      <if test="weight != null">
+        #{weight,jdbcType=REAL},
+      </if>
+      <if test="nextBlock != null">
+        #{nextBlock,jdbcType=CHAR},
+      </if>
+      <if test="prevBlock != null">
+        #{prevBlock,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="io.ps.blockexplorer0614.po.Block">
+    update block
+    <set>
+      <if test="blockhash != null">
+        blockhash = #{blockhash,jdbcType=CHAR},
+      </if>
+      <if test="height != null">
+        height = #{height,jdbcType=INTEGER},
+      </if>
+      <if test="time != null">
+        time = #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="txsize != null">
+        txSize = #{txsize,jdbcType=SMALLINT},
+      </if>
+      <if test="size != null">
+        size = #{size,jdbcType=INTEGER},
+      </if>
+      <if test="difficulty != null">
+        difficulty = #{difficulty,jdbcType=DOUBLE},
+      </if>
+      <if test="weight != null">
+        weight = #{weight,jdbcType=REAL},
+      </if>
+      <if test="nextBlock != null">
+        next_block = #{nextBlock,jdbcType=CHAR},
+      </if>
+      <if test="prevBlock != null">
+        prev_block = #{prevBlock,jdbcType=CHAR},
+      </if>
+    </set>
+    where block_id = #{blockId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="io.ps.blockexplorer0614.po.Block">
+    update block
+    set blockhash = #{blockhash,jdbcType=CHAR},
+      height = #{height,jdbcType=INTEGER},
+      time = #{time,jdbcType=TIMESTAMP},
+      txSize = #{txsize,jdbcType=SMALLINT},
+      size = #{size,jdbcType=INTEGER},
+      difficulty = #{difficulty,jdbcType=DOUBLE},
+      weight = #{weight,jdbcType=REAL},
+      next_block = #{nextBlock,jdbcType=CHAR},
+      prev_block = #{prevBlock,jdbcType=CHAR}
+    where block_id = #{blockId,jdbcType=INTEGER}
+  </update>
+</mapper>
