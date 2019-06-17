@@ -2,6 +2,7 @@ package io.ps.blockexplorer0614.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import io.ps.blockexplorer0614.api.BitcoinJsonRpcClient;
 import io.ps.blockexplorer0614.api.BlockExplorerAPI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -14,7 +15,33 @@ import org.springframework.web.bind.annotation.*;
 public class BlockController {
     @Autowired
     private BlockExplorerAPI blockExplorerAPI;
-    //
+    @Autowired
+    private BitcoinJsonRpcClient bitcoinJsonRpcClient;
+
+    @GetMapping("/getBestblockHash")
+    public String getBestblockHash() throws Throwable {
+        return bitcoinJsonRpcClient.getBestblockHash();
+    }
+
+    @GetMapping("/getBlockHashByHeight")
+    public String getBlockHashByHeight(Integer blockHeight) throws Throwable {
+        return bitcoinJsonRpcClient.getBlockHashByHeight(blockHeight);
+    }
+
+    @GetMapping("/getAddressInfo")
+    public JSONObject getAddressInfo(String address) throws Throwable {
+        return bitcoinJsonRpcClient.getAddressInfo(address);
+    }
+    @GetMapping("/getBalance")
+    public Double getBalance(String address) throws Throwable {
+        return bitcoinJsonRpcClient.getBalance(address);
+    }
+
+    @GetMapping("/getRawTransaxtion")
+    public JSONObject getRawTransaxtion(String txid) throws Throwable {
+        return bitcoinJsonRpcClient.getRawTransaxtion(txid);
+    }
+    //--------------------------------------------------------------------------------------------
     @GetMapping("/getChainInfo")
     public JSONObject getChainInfo(){
         return blockExplorerAPI.getChainInfo();
