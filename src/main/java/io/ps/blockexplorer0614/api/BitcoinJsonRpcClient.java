@@ -40,8 +40,8 @@ public class BitcoinJsonRpcClient implements BitcoinJsonRpcClientAPI{
     }
 
     public Double getBalance(String address) throws Throwable {
-        JSONArray balances = jsonRpcHttpClient.invoke("listunspent", new Object[]{6, 9999999, new String[]{address}}, JSONArray.class);
-        JSONObject balance = balances.getJSONObject(0);
+        JSONArray balances = jsonRpcHttpClient.invoke("listunspent", new Object[]{6, 9999999}, JSONArray.class);
+        JSONObject balance = balances.getJSONObject(1);
         Double amount = balance.getDouble("amount");
         return amount;
     }
