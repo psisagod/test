@@ -27,12 +27,12 @@
     delete from block
     where block_id = #{blockId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="io.ps.blockexplorer0614.po.Block">
-    insert into block (block_id, blockhash, height, 
+  <insert id="insert" parameterType="io.ps.blockexplorer0614.po.Block"  keyProperty="blockId" useGeneratedKeys="true">
+    insert into block (blockhash, height,
       time, txSize, size, 
       difficulty, weight, next_block, 
       prev_block)
-    values (#{blockId,jdbcType=INTEGER}, #{blockhash,jdbcType=CHAR}, #{height,jdbcType=INTEGER}, 
+    values (#{blockhash,jdbcType=CHAR}, #{height,jdbcType=INTEGER},
       #{time,jdbcType=TIMESTAMP}, #{txsize,jdbcType=SMALLINT}, #{size,jdbcType=INTEGER}, 
       #{difficulty,jdbcType=DOUBLE}, #{weight,jdbcType=REAL}, #{nextBlock,jdbcType=CHAR}, 
       #{prevBlock,jdbcType=CHAR})
@@ -150,4 +150,11 @@
       prev_block = #{prevBlock,jdbcType=CHAR}
     where block_id = #{blockId,jdbcType=INTEGER}
   </update>
+  <select id="selectRecentBlocks" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from block
+    order by height desc
+    limit 5
+  </select>
 </mapper>

@@ -82,4 +82,5 @@ public class Transacation {
     public void setConfirmations(Integer confirmations) {
         this.confirmations = confirmations;
     }
+
 }

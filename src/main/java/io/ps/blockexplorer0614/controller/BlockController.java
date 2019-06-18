@@ -4,9 +4,11 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import io.ps.blockexplorer0614.api.BitcoinJsonRpcClientAPI;
 import io.ps.blockexplorer0614.api.BitcoinRestAPI;
+import io.ps.blockexplorer0614.dao.BlockMapper;
 import io.ps.blockexplorer0614.dto.BlockGetDTO;
 import io.ps.blockexplorer0614.dto.BlockListDTO;
 import io.ps.blockexplorer0614.dto.TxListDTO;
+import io.ps.blockexplorer0614.service.BlockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.*;
@@ -24,76 +26,79 @@ public class BlockController {
     private BitcoinRestAPI bitcoinRestAPI;
     @Autowired
     private BitcoinJsonRpcClientAPI bitcoinJsonRpcClientAPI;
-
+    @Autowired
+    private BlockService blockService;
     @GetMapping("/getRecentBlocks")
     public List<BlockListDTO> getRecentBlocks() throws Throwable {
-        ArrayList<BlockListDTO> blockListDTOS = new ArrayList<>();
-
-        JSONObject blockChainInfo = bitcoinRestAPI.getChainInfo();
-        Integer blockHeight = blockChainInfo.getInteger("blocks");
-        Integer blockFromHeight = blockHeight - 5;
-
-        String blockhash = bitcoinJsonRpcClientAPI.getBlockHashByHeight(blockFromHeight);
-        List<JSONObject> blockHeaders = bitcoinRestAPI.getBlockHeaders(5,blockhash);
-
-        for(Object blockHeader : blockHeaders){
-            JSONObject jsonObject = (JSONObject) blockHeader;
-            BlockListDTO blockListDTO = new BlockListDTO();
-            blockListDTO.setHeight(jsonObject.getInteger("height"));
-            Long time = jsonObject.getLong("time");
-            blockListDTO.setTime(new Date(1000*time));
-            blockListDTO.setConfirmations(jsonObject.getInteger("confirmations"));
-            blockListDTO.setBlockhash(jsonObject.getString("hash"));
-            blockListDTO.setTxsize(jsonObject.getShort("nTx"));
-            blockListDTO.setSize(null);
-            blockListDTOS.add(blockListDTO);
-        }
-        return blockListDTOS;
+        List<BlockListDTO> recentBlocks = blockService.getRecentBlocks();
+        return recentBlocks;
     }
-//    @GetMapping("/getRecentTransaction")
-//    public List<TxListDTO> getRecentTransaction() throws Throwable {
+
+//    @GetMapping("/getRecentBlocks")
+//    public List<BlockListDTO> getRecentBlocks() throws Throwable {
+//        List<BlockListDTO> recentBlocks = blockService.getRecentBlocks();
+//        ArrayList<BlockListDTO> blockListDTOS = new ArrayList<>();
 //
+//        JSONObject blockChainInfo = bitcoinRestAPI.getChainInfo();
+//        Integer blockHeight = blockChainInfo.getInteger("blocks");
+//        Integer blockFromHeight = blockHeight - 5;
 //
+//        String blockhash = bitcoinJsonRpcClientAPI.getBlockHashByHeight(blockFromHeight);
+//        List<JSONObject> blockHeaders = bitcoinRestAPI.getBlockHeaders(5,blockhash);
+//
+//        for(Object blockHeader : blockHeaders){
+//            JSONObject jsonObject = (JSONObject) blockHeader;
+//            BlockListDTO blockListDTO = new BlockListDTO();
+//            blockListDTO.setHeight(jsonObject.getInteger("height"));
+//            Long time = jsonObject.getLong("time");
+//            Long leadtime = new Date().getTime()-time;
+//            Integer minutes = Math.toIntExact(leadtime / 1000 / 60);
+//            blockListDTO.setAge(minutes);
+//            blockListDTO.setTransactions(jsonObject.getInteger("confirmations"));
+//            blockListDTO.setMiner("ps");
+//            JSONObject block = bitcoinRestAPI.getBlock(((JSONObject) blockHeader).getString("hash"));
+//            blockListDTO.setSize(block.getShort("size"));
+//            blockListDTOS.add(blockListDTO);
+//        }
 //        return blockListDTOS;
 //    }
-    @GetMapping("/getBlock")
-    public JSONObject getBlock(){
-        return bitcoinRestAPI.getBlock("0000000024224c12fd9cc28e17b7eb5cd08645324e209ef48b95625d7aa260d9");
-    }
 
-    @GetMapping("/getTransaction")
-    public JSONObject getTransaction(){
-        return bitcoinRestAPI.getTransaction("576eaa78b49a1c961086abb51e7cfd316703ed4ca05a7296a9ce2cb75106b7c5");
-    }
-    @GetMapping("/getBlockByBlockheight")
-    public BlockGetDTO getBlockByBlockheight(@RequestParam Integer Blockheight) throws Throwable {
-        BlockGetDTO blockGetDTO = new BlockGetDTO();
-        String blockhash = bitcoinJsonRpcClientAPI.getBlockHashByHeight(Blockheight);
-        JSONObject block = bitcoinRestAPI.getBlock(blockhash);
-        blockGetDTO.setBlockhash(blockhash);
-        blockGetDTO.setNumber_of_transactions(block.getInteger("confirmations"));
-        blockGetDTO.setSize(block.getInteger("size"));
-        blockGetDTO.setTime(block.getLong("time"));
-        blockGetDTO.setTxSize(block.getShort("nTx"));
-        blockGetDTO.setNextBlock(block.getString("nextblockhash"));
-        blockGetDTO.setPrevBlcok(block.getString("previousblockhash"));
-        return blockGetDTO;
-    }
-    @GetMapping("/getBlockByBlockhash")
-    public BlockGetDTO getBlockByBlockhash(@RequestParam String blockhash){
-        BlockGetDTO blockGetDTO = new BlockGetDTO();
-        JSONObject block = bitcoinRestAPI.getBlock(blockhash);
-        blockGetDTO.setBlockhash(blockhash);
-        blockGetDTO.setNumber_of_transactions(block.getInteger("confirmations"));
-        blockGetDTO.setSize(block.getInteger("size"));
-        blockGetDTO.setTime(block.getLong("time"));
-        blockGetDTO.setTxSize(block.getShort("nTx"));
-        blockGetDTO.setNextBlock(block.getString("nextblockhash"));
-        blockGetDTO.setPrevBlcok(block.getString("previousblockhash"));
-        return blockGetDTO;
-    }
+//    @GetMapping("/getRecentTransaction")
+//    public List<TxListDTO> getRecentTransaction() throws Throwable {
+//        return blockListDTOS;
+//    }
+
+
+//    @GetMapping("/getBlockByBlockheight")
+//    public BlockGetDTO getBlockByBlockheight(@RequestParam Integer Blockheight) throws Throwable {
+//        BlockGetDTO blockGetDTO = new BlockGetDTO();
+//        String blockhash = bitcoinJsonRpcClientAPI.getBlockHashByHeight(Blockheight);
+//        JSONObject block = bitcoinRestAPI.getBlock(blockhash);
+//        blockGetDTO.setBlockhash(blockhash);
+//        blockGetDTO.setNumber_of_transactions(block.getInteger("confirmations"));
+//        blockGetDTO.setSize(block.getInteger("size"));
+//        blockGetDTO.setTime(block.getLong("time"));
+//        blockGetDTO.setTxSize(block.getShort("nTx"));
+//        blockGetDTO.setNextBlock(block.getString("nextblockhash"));
+//        blockGetDTO.setPrevBlcok(block.getString("previousblockhash"));
+//        return blockGetDTO;
+//    }
+//    @GetMapping("/getBlockByBlockhash")
+//    public BlockGetDTO getBlockByBlockhash(@RequestParam String blockhash){
+//        BlockGetDTO blockGetDTO = new BlockGetDTO();
+//        JSONObject block = bitcoinRestAPI.getBlock(blockhash);
+//        blockGetDTO.setBlockhash(blockhash);
+//        blockGetDTO.setNumber_of_transactions(block.getInteger("confirmations"));
+//        blockGetDTO.setSize(block.getInteger("size"));
+//        blockGetDTO.setTime(block.getLong("time"));
+//        blockGetDTO.setTxSize(block.getShort("nTx"));
+//        blockGetDTO.setNextBlock(block.getString("nextblockhash"));
+//        blockGetDTO.setPrevBlcok(block.getString("previousblockhash"));
+//        return blockGetDTO;
+//    }
 
     //----------------------------------------------------------------------------------------
+
     @GetMapping("/getBestblockHash")
     public String getBestblockHash() throws Throwable {
         return bitcoinJsonRpcClientAPI.getBestblockHash();
@@ -118,14 +123,24 @@ public class BlockController {
         return bitcoinJsonRpcClientAPI.getRawTransaxtion(txid);
     }
     //--------------------------------------------------------------------------------------------
+
     @GetMapping("/getChainInfo")
     public JSONObject getChainInfo(){
         return bitcoinRestAPI.getChainInfo();
     }
 
+    @GetMapping("/getBlock")
+    public JSONObject getBlock(){
+        return bitcoinRestAPI.getBlock("00000000000244b81e44414f7ca4b1961a900a628526a8a8c540ba6ce2738263");
+    }
+    @GetMapping("/getTransaction")
+    public JSONObject getTransaction(){
+        return bitcoinRestAPI.getTransaction("576eaa78b49a1c961086abb51e7cfd316703ed4ca05a7296a9ce2cb75106b7c5");
+    }
+
     @GetMapping("/getNoTxBlock")
     public JSONObject getNoTxBlock(){
-        return bitcoinRestAPI.getNoTxBlock("0000000024224c12fd9cc28e17b7eb5cd08645324e209ef48b95625d7aa260d9");
+        return bitcoinRestAPI.getNoTxBlock("00000000000244b81e44414f7ca4b1961a900a628526a8a8c540ba6ce2738263");
     }
 
     @GetMapping("/getBlockHeaders")

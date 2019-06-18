@@ -3,25 +3,16 @@ package io.ps.blockexplorer0614.dto;
 import java.util.Date;
 
 public class BlockListDTO {
-    private String blockhash;
 
     private Integer height;
 
-    private Date time;
+    private Integer age;
 
-    private Integer confirmations;
+    private Integer transactions;
+
+    private String miner;
 
     private Integer size;
-
-    private Short txsize;
-
-    public String getBlockhash() {
-        return blockhash;
-    }
-
-    public void setBlockhash(String blockhash) {
-        this.blockhash = blockhash;
-    }
 
     public Integer getHeight() {
         return height;
@@ -31,20 +22,28 @@ public class BlockListDTO {
         this.height = height;
     }
 
-    public Date getTime() {
-        return time;
+    public Integer getAge() {
+        return age;
     }
 
-    public void setTime(Date time) {
-        this.time = time;
+    public void setAge(Integer age) {
+        this.age = age;
     }
 
-    public Integer getConfirmations() {
-        return confirmations;
+    public Integer getTransactions() {
+        return transactions;
     }
 
-    public void setConfirmations(Integer confirmations) {
-        this.confirmations = confirmations;
+    public void setTransactions(Integer transactions) {
+        this.transactions = transactions;
+    }
+
+    public String getMiner() {
+        return miner;
+    }
+
+    public void setMiner(String miner) {
+        this.miner = miner;
     }
 
     public Integer getSize() {
@@ -53,13 +52,5 @@ public class BlockListDTO {
 
     public void setSize(Integer size) {
         this.size = size;
-    }
-
-    public Short getTxsize() {
-        return txsize;
-    }
-
-    public void setTxsize(Short txsize) {
-        this.txsize = txsize;
     }
 }

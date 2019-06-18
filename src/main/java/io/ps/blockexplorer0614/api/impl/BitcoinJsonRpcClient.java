@@ -1,8 +1,9 @@
-package io.ps.blockexplorer0614.api;
+package io.ps.blockexplorer0614.api.impl;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.googlecode.jsonrpc4j.JsonRpcHttpClient;
+import io.ps.blockexplorer0614.api.BitcoinJsonRpcClientAPI;
 import org.springframework.stereotype.Service;
 
 import java.net.MalformedURLException;
@@ -11,7 +12,7 @@ import java.util.Base64;
 import java.util.HashMap;
 
 @Service
-public class BitcoinJsonRpcClient implements BitcoinJsonRpcClientAPI{
+public class BitcoinJsonRpcClient implements BitcoinJsonRpcClientAPI {
     private JsonRpcHttpClient jsonRpcHttpClient;
 
     public BitcoinJsonRpcClient() throws MalformedURLException {
