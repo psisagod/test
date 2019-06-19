@@ -125,4 +125,11 @@
       confirmations = #{confirmations,jdbcType=INTEGER}
     where transacation_id = #{transacationId,jdbcType=INTEGER}
   </update>
+  <select id="selectRecentTxs" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from transacation
+    order by time desc
+    limit 5
+  </select>
 </mapper>

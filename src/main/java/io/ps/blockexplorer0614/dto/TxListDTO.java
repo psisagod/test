@@ -1,103 +1,40 @@
 package io.ps.blockexplorer0614.dto;
 
 public class TxListDTO {
-    private String blockhash;
-    private Integer height;
-    private String prevBlcok;
-    private String nextBlock;
-    private String merkleRoot;
-    private Short txSize;
-    private Double outputTotal;
-    private Double fees;
-    private Long time;
-    private Double difficulty;
-    private Integer size;
+    private String transaction_hash;
+    private Integer age;
+    private Double amount_eth;
+    private Double amount_usd;
 
-    public String getBlockhash() {
-        return blockhash;
+    public String getTransaction_hash() {
+        return transaction_hash;
     }
 
-    public void setBlockhash(String blockhash) {
-        this.blockhash = blockhash;
+    public void setTransaction_hash(String transaction_hash) {
+        this.transaction_hash = transaction_hash;
     }
 
-    public Integer getHeight() {
-        return height;
+    public Integer getAge() {
+        return age;
     }
 
-    public void setHeight(Integer height) {
-        this.height = height;
+    public void setAge(Integer age) {
+        this.age = age;
     }
 
-    public String getPrevBlcok() {
-        return prevBlcok;
+    public Double getAmount_eth() {
+        return amount_eth;
     }
 
-    public void setPrevBlcok(String prevBlcok) {
-        this.prevBlcok = prevBlcok;
+    public void setAmount_eth(Double amount_eth) {
+        this.amount_eth = amount_eth;
     }
 
-    public String getNextBlock() {
-        return nextBlock;
+    public Double getAmount_usd() {
+        return amount_usd;
     }
 
-    public void setNextBlock(String nextBlock) {
-        this.nextBlock = nextBlock;
-    }
-
-    public String getMerkleRoot() {
-        return merkleRoot;
-    }
-
-    public void setMerkleRoot(String merkleRoot) {
-        this.merkleRoot = merkleRoot;
-    }
-
-    public Short getTxSize() {
-        return txSize;
-    }
-
-    public void setTxSize(Short txSize) {
-        this.txSize = txSize;
-    }
-
-    public Double getOutputTotal() {
-        return outputTotal;
-    }
-
-    public void setOutputTotal(Double outputTotal) {
-        this.outputTotal = outputTotal;
-    }
-
-    public Double getFees() {
-        return fees;
-    }
-
-    public void setFees(Double fees) {
-        this.fees = fees;
-    }
-
-    public Long getTime() {
-        return time;
-    }
-
-    public void setTime(Long time) {
-        this.time = time;
-    }
-
-    public Double getDifficulty() {
-        return difficulty;
-    }
-
-    public void setDifficulty(Double difficulty) {
-        this.difficulty = difficulty;
-    }
-
-    public Integer getSize() {
-        return size;
-    }
-
-    public void setSize(Integer size) {
-        this.size = size;
+    public void setAmount_usd(Double amount_usd) {
+        this.amount_usd = amount_usd;
     }
 }
