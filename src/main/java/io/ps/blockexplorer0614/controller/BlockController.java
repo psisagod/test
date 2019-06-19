@@ -14,6 +14,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -33,41 +34,37 @@ public class BlockController {
         List<BlockListDTO> recentBlocks = blockService.getRecentBlocks();
         return recentBlocks;
     }
-
-//    @GetMapping("/getRecentBlocks")
-//    public List<BlockListDTO> getRecentBlocks() throws Throwable {
-//        List<BlockListDTO> recentBlocks = blockService.getRecentBlocks();
-//        ArrayList<BlockListDTO> blockListDTOS = new ArrayList<>();
-//
-//        JSONObject blockChainInfo = bitcoinRestAPI.getChainInfo();
-//        Integer blockHeight = blockChainInfo.getInteger("blocks");
-//        Integer blockFromHeight = blockHeight - 5;
-//
-//        String blockhash = bitcoinJsonRpcClientAPI.getBlockHashByHeight(blockFromHeight);
-//        List<JSONObject> blockHeaders = bitcoinRestAPI.getBlockHeaders(5,blockhash);
-//
-//        for(Object blockHeader : blockHeaders){
-//            JSONObject jsonObject = (JSONObject) blockHeader;
-//            BlockListDTO blockListDTO = new BlockListDTO();
-//            blockListDTO.setHeight(jsonObject.getInteger("height"));
-//            Long time = jsonObject.getLong("time");
-//            Long leadtime = new Date().getTime()-time;
-//            Integer minutes = Math.toIntExact(leadtime / 1000 / 60);
-//            blockListDTO.setAge(minutes);
-//            blockListDTO.setTransactions(jsonObject.getInteger("confirmations"));
-//            blockListDTO.setMiner("ps");
-//            JSONObject block = bitcoinRestAPI.getBlock(((JSONObject) blockHeader).getString("hash"));
-//            blockListDTO.setSize(block.getShort("size"));
-//            blockListDTOS.add(blockListDTO);
-//        }
-//        return blockListDTOS;
+    @GetMapping("/getblockbyheight")
+    public BlockGetDTO getblockbyheight(@RequestParam(required = false)Integer blockheight) throws Throwable {
+        String blockhashbyheight = bitcoinJsonRpcClientAPI.getBlockHashByHeight(blockheight);
+        JSONObject jsonObject = bitcoinRestAPI.getBlock(blockhashbyheight);
+        BlockGetDTO blockGetDTO = new BlockGetDTO();
+        blockGetDTO.setNumber_of_transactions(jsonObject.getInteger("confirmations"));
+        blockGetDTO.setDifficulty(jsonObject.getDouble("difficulty"));
+        blockGetDTO.setBits(jsonObject.getString("bits"));
+        blockGetDTO.setHash(blockhashbyheight);
+        blockGetDTO.setHeight(blockheight);
+        blockGetDTO.setNonce(jsonObject.getLong("nonce"));
+        blockGetDTO.setPrevious_block(jsonObject.getString("previousblockhash"));
+        blockGetDTO.setSize(jsonObject.getDouble("size"));
+        //blockGetDTO.setTransaction_fees();
+        blockGetDTO.setVersion(jsonObject.getString("versionHex"));
+        blockGetDTO.setWeight(jsonObject.getDouble("weight"));
+        //blockGetDTO.setBlock_reward();块奖励
+        //blockGetDTO.setEstimated_transaction_volume();估计交易金额
+        //blockGetDTO.setMerkle_root();根
+        //blockGetDTO.setOutput_total();输出总量
+        //blockGetDTO.setReceived_time();
+        //blockGetDTO.setTimestamp();
+        //blockGetDTO.setRelayed_by();
+        return blockGetDTO;
+    }
+//    @GetMapping("/getblockbyheight")
+//    public List<BlockGetDTO> getblockbyheight(@RequestParam(required = false)Integer blockheight,@RequestParam(required = false)String blockhash) throws Throwable {
+//        String blockhashbyheight = bitcoinJsonRpcClientAPI.getBlockHashByHeight(blockheight);
+//        List<BlockGetDTO> blockGetDTOS = blockService.getblockbyheight(blockheight);
+//        return blockGetDTOS;
 //    }
-
-//    @GetMapping("/getRecentTransaction")
-//    public List<TxListDTO> getRecentTransaction() throws Throwable {
-//        return blockListDTOS;
-//    }
-
 
 //    @GetMapping("/getBlockByBlockheight")
 //    public BlockGetDTO getBlockByBlockheight(@RequestParam Integer Blockheight) throws Throwable {
