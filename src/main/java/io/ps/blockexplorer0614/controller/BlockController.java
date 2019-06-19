@@ -59,6 +59,30 @@ public class BlockController {
         //blockGetDTO.setRelayed_by();
         return blockGetDTO;
     }
+    @GetMapping("/getblockbyblockhash")
+    public BlockGetDTO getblockbyheight(@RequestParam(required = false)String blockhash) throws Throwable {
+        JSONObject jsonObject = bitcoinRestAPI.getBlock(blockhash);
+        BlockGetDTO blockGetDTO = new BlockGetDTO();
+        blockGetDTO.setNumber_of_transactions(jsonObject.getInteger("confirmations"));
+        blockGetDTO.setDifficulty(jsonObject.getDouble("difficulty"));
+        blockGetDTO.setBits(jsonObject.getString("bits"));
+        blockGetDTO.setHash(blockhash);
+        blockGetDTO.setHeight(jsonObject.getInteger("height"));
+        blockGetDTO.setNonce(jsonObject.getLong("nonce"));
+        blockGetDTO.setPrevious_block(jsonObject.getString("previousblockhash"));
+        blockGetDTO.setSize(jsonObject.getDouble("size"));
+        //blockGetDTO.setTransaction_fees();
+        blockGetDTO.setVersion(jsonObject.getString("versionHex"));
+        blockGetDTO.setWeight(jsonObject.getDouble("weight"));
+        //blockGetDTO.setBlock_reward();块奖励
+        //blockGetDTO.setEstimated_transaction_volume();估计交易金额
+        //blockGetDTO.setMerkle_root();根
+        //blockGetDTO.setOutput_total();输出总量
+        //blockGetDTO.setReceived_time();
+        //blockGetDTO.setTimestamp();
+        //blockGetDTO.setRelayed_by();
+        return blockGetDTO;
+    }
 //    @GetMapping("/getblockbyheight")
 //    public List<BlockGetDTO> getblockbyheight(@RequestParam(required = false)Integer blockheight,@RequestParam(required = false)String blockhash) throws Throwable {
 //        String blockhashbyheight = bitcoinJsonRpcClientAPI.getBlockHashByHeight(blockheight);
