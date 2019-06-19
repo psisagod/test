@@ -2,6 +2,7 @@ package io.ps.blockexplorer0614.service.impl;
 
 import io.ps.blockexplorer0614.dao.BlockMapper;
 import io.ps.blockexplorer0614.dao.TransacationMapper;
+import io.ps.blockexplorer0614.dto.BlockGetDTO;
 import io.ps.blockexplorer0614.dto.BlockListDTO;
 import io.ps.blockexplorer0614.po.Block;
 import io.ps.blockexplorer0614.po.Transacation;
@@ -44,7 +45,13 @@ public class BlockServiceImpl implements BlockService {
             blockListDTOS.add(blockListDTO);
             i++;
         }
-
         return blockListDTOS;
+    }
+
+    @Override
+    public List<BlockGetDTO> getblockbyheight(Integer blockheight) {
+        BlockGetDTO blockGetDTO = new BlockGetDTO();
+
+        return null;
     }
 }

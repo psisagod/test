@@ -13,7 +13,7 @@ public class BlockGetDTO {
     private Date received_time;
     private String relayed_by;
     private Double difficulty;
-    private Long bits;
+    private String bits;
     private Double size;
     private Double weight;
     private String version;
@@ -96,11 +96,11 @@ public class BlockGetDTO {
         this.difficulty = difficulty;
     }
 
-    public Long getBits() {
+    public String getBits() {
         return bits;
     }
 
-    public void setBits(Long bits) {
+    public void setBits(String bits) {
         this.bits = bits;
     }
 

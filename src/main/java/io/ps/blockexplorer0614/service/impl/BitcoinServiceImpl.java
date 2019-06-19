@@ -2,11 +2,13 @@ package io.ps.blockexplorer0614.service.impl;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import io.ps.blockexplorer0614.api.BitcoinJsonRpcClientAPI;
 import io.ps.blockexplorer0614.api.BitcoinRestAPI;
 import io.ps.blockexplorer0614.dao.BlockMapper;
 
 import io.ps.blockexplorer0614.dao.TransacationMapper;
 import io.ps.blockexplorer0614.dao.Tx_detallMapper;
+import io.ps.blockexplorer0614.enumeration.TxDerailType;
 import io.ps.blockexplorer0614.po.Block;
 import io.ps.blockexplorer0614.po.Transacation;
 import io.ps.blockexplorer0614.po.Tx_detall;
@@ -38,10 +40,13 @@ public class BitcoinServiceImpl implements BitcoinService {
 
     @Autowired
     private Tx_detallMapper tx_detallMapper;
-    @Override
+
+    @Autowired
+    private BitcoinJsonRpcClientAPI bitcoinJsonRpcClientAPI;
+
     @Async
-    @Transactional
-    public void syncBlock(String blockhash) {
+    @Override
+    public void syncBlock(String blockhash) throws Throwable {
         logger.info("begin to sync block from {}", blockhash);
         String tempBlockhash = blockhash;
         while (tempBlockhash != null && !tempBlockhash.isEmpty()){
@@ -49,7 +54,7 @@ public class BitcoinServiceImpl implements BitcoinService {
             Block block = new Block();
             block.setBlockhash(blockJson.getString("hash"));
             block.setHeight(blockJson.getInteger("height"));
-            if(block.getHeight()>5000){
+            if(block.getHeight()>2000){
                 break;
             }
             Long time = blockJson.getLong("time");
@@ -72,10 +77,9 @@ public class BitcoinServiceImpl implements BitcoinService {
         }
         logger.info("end sync block");
     }
-
+    @Async
     @Override
-    @Transactional
-    public void syncTx(JSONObject txJson, String blockhash, Date time, Integer confirmations) {
+    public void syncTx(JSONObject txJson, String blockhash, Date time, Integer confirmations) throws Throwable {
         Transacation tx = new Transacation();
         tx.setTxhash(txJson.getString("txid"));
         tx.setBlockhash(blockhash);
@@ -84,37 +88,50 @@ public class BitcoinServiceImpl implements BitcoinService {
         tx.setWeight(txJson.getFloat("weight"));
         tx.setConfirmations(confirmations);
         transacationMapper.insert(tx);
-
         syncTxDetail(txJson);
-
         //todo set tx amount
     }
-
+    @Async
     @Override
-    public void syncTxDetail(JSONObject txJson) {
+    public void syncTxDetail(JSONObject txJson) throws Throwable {
         String txhash = txJson.getString("hash");
         JSONArray vouts = txJson.getJSONArray("vout");
         syncTxDetailVout(vouts,txhash);
         JSONArray vins = txJson.getJSONArray("vin");
-        syncTxDetailVin(vins);
+        syncTxDetailVin(vins,txhash);
         //todo set tx amount
     }
-
+    @Async
     @Override
     public void syncTxDetailVout(JSONArray vouts,String txhash) {
         Tx_detall tx_detall = new Tx_detall();
         tx_detall.setTxhash(txhash);
         for (Object vout : vouts) {
             JSONObject jsonObject = new JSONObject((LinkedHashMap) vout);
-            tx_detall.setAdress(jsonObject.getJSONObject("scriptPubKey").getString("addresses"));
-           //stx_detall.setType(jsonObject.getJSONObject("scriptPubKey").getString("addresses"));
+            JSONObject scriptPubKey =jsonObject.getJSONObject("scriptPubKey");
+            Double amount = jsonObject.getDouble("value");
+            tx_detall.setAmount(amount);
+            String addresses = scriptPubKey.getString("addresses");
+            tx_detall.setAdress(addresses);
+            tx_detall.setType((byte) TxDerailType.Receive.ordinal());
         }
         tx_detallMapper.insert(tx_detall);
     }
-
+    @Async
     @Override
-    public void syncTxDetailVin(JSONArray vins) {
-
+    public void syncTxDetailVin(JSONArray vins,String txhashOrigin) throws Throwable {
+//        Tx_detall tx_detall = new Tx_detall();
+//        for (Object vin : vins) {
+//            JSONObject jsonObject = new JSONObject((LinkedHashMap) vin);
+//             Integer vout = jsonObject.getInteger("vout");
+//            JSONObject rawTransaxtion = bitcoinJsonRpcClientAPI.getRawTransaxtion(txhashOrigin);
+//            JSONArray vouts = rawTransaxtion.getJSONArray("vout");
+//            JSONObject jsonVout = vouts.getJSONObject(vout);
+//            tx_detall.setTxhash(txhashOrigin);
+//            tx_detall.setType((byte) TxDerailType.Send.ordinal());
+//            Double amount = jsonObject.getDouble("value");
+//        }
+//        tx_detallMapper.insert(tx_detall);
     }
 
 

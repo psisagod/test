@@ -9,13 +9,13 @@ import java.util.List;
 
 public interface BitcoinService {
 
-    void syncBlock(String blockhash);
+    void syncBlock(String blockhash) throws Throwable;
 
-    void syncTx(JSONObject txJson, String blockhash, Date time, Integer confirmations);
+    void syncTx(JSONObject txJson, String blockhash, Date time, Integer confirmations) throws Throwable;
 
-    void syncTxDetail(JSONObject txJson);
+    void syncTxDetail(JSONObject txJson) throws Throwable;
 
     void syncTxDetailVout(JSONArray vouts,String txhash);
 
-    void syncTxDetailVin(JSONArray vins);
+    void syncTxDetailVin(JSONArray vins,String txhash) throws Throwable;
 }
