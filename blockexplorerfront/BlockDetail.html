@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="assets/css/elementui.css">
+    <title>Demo</title>
+</head>
+
+<body>
+    <div id="app">
+            <h1>Block #{{blockDetail.height}}</h1>  <br>
+
+            Number Of Transactions:	{{blockDetail.number_of_transactions}} <br>
+            Height:	{{blockDetail.height}} <br>
+            Timestamp：	{{blockDetail.timestamp}} <br>
+            Difficulty：	{{blockDetail.difficulty}} <br>
+            Size：	{{blockDetail.size}} <br>
+            Hash：	{{blockDetail.hash}} <br>
+            Previous Block：	{{blockDetail.previous_block}} <br>
+            Next Block(s)：	{{blockDetail.nextBlockhash}}<br>
+            Merkle： {{blockDetail.merkle_root}} <br>
+    </div>
+
+    <script src="assets/js/axios.min.js"></script>
+    <script src="assets/js/common.js"></script>
+    <script src="assets/js/vue.js"></script>
+    <script src="assets/js/elementui.js"></script>
+    <script src="viewmodels/BlockDetail.js"></script>
+
+</body>
+
+</html>

@@ -16,20 +16,20 @@ public class BitcoinController {
     @Autowired
     private BlockController blockController;
     @GetMapping("/search")
-    public Object search(@RequestParam(required = false)String searchBlock) throws Throwable {
+    public Object search(@RequestParam(required = false)String searchname) throws Throwable {
 
-        if(searchBlock.length()==34){
+        if(searchname.length()==34){
 
         }
-        if(searchBlock.length()<7){
-            BlockGetDTO blockGetDTOByHeight  = blockController.searchBlockByBlockHeight(Integer.parseInt(searchBlock));
+        if(searchname.length()<7){
+            BlockGetDTO blockGetDTOByHeight  = blockController.searchBlockByBlockHeight(Integer.parseInt(searchname));
             if(blockGetDTOByHeight != null){
                 return blockGetDTOByHeight;
             }
         }
-        if(searchBlock.length()==64){
+        if(searchname.length()==64){
             try {
-                BlockGetDTO blockGetDTOByHash  = blockController.searchBlockByBlockHash(searchBlock);
+                BlockGetDTO blockGetDTOByHash  = blockController.searchBlockByBlockHash(searchname);
                 if(blockGetDTOByHash != null){
                     return blockGetDTOByHash;
                 }
@@ -38,7 +38,7 @@ public class BitcoinController {
                 System.out.println(e.getStackTrace());
             }
 
-            TxGetDTO  txGetDTO = txController.searchTx(searchBlock);
+            TxGetDTO  txGetDTO = txController.searchTx(searchname);
             if(txGetDTO != null){
                 return txGetDTO;
             }
