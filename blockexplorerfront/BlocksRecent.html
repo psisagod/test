@@ -114,6 +114,12 @@
             padding: 10px 0;
             background-color: #f9fafc;
         }
+        .boby{
+            max-width: 100%;
+        }
+        .end{
+            max-width: 100%;
+        }
     </style>
 </head>
 
@@ -152,8 +158,7 @@
                             <el-table :data="recentBlocks" stripe style="width:100%">
                                     <el-table-column prop="height" label="Height">
                                         <template slot-scope="scope">
-                                            <a
-                                                :href="'http://localhost:8080/block/getblockbyblockhash?blockhash=' + scope.row.blockhash">{{scope.row.height}}</a>
+                                            <a @click="getblockbyheight(scope.row.height)">{{scope.row.height}}</a>
                                         </template>
                                     </el-table-column>
                                     <el-table-column prop="age" label="Age">
@@ -170,8 +175,7 @@
                             <el-table :data="recentTxs" stripe style="width:100%">
                                     <el-table-column prop="transaction_hash" label="Transaction Hash" :show-overflow-tooltip="true">
                                         <template slot-scope="scope">
-                                            <a
-                                                :href="'http://localhost:8080/block/getblockbyblockhash?blockhash=' + scope.row.blockhash">{{scope.row.transaction_hash}}</a>
+                                            <a @click="gettxbyhash(scope.row.transaction_hash)">{{scope.row.transaction_hash}}</a>
                                         </template>
                                     </el-table-column>
                                     <el-table-column prop="age" label="Age">
@@ -187,9 +191,12 @@
             </template>
      
         </div>
-        <div class="div5">
-                
-        </div> 
+        <div>
+            <img class="boby" src="img/index/boby.png"> 
+        </div>  
+        <div>
+            <img class="end" src="img/index/end.png"> 
+        </div>  
 
 
  </div>           

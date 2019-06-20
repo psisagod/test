@@ -49,15 +49,15 @@ var app = new Vue({
             console.log(val);
         },
         search() {
-            location.href = "BlockDetail.html?searchname=" + this.searchname
+            location.href = "BlockDetail.html?searchname=" + this.searchname;
         },
-        blocks(div4){
-            console.log(div4);
-
+        getblockbyheight(row){
+            console.log(row);
+            location.href = "BlockDetail.html?searchname=" + row;
         },
-        transactions(div6){
-            console.log("transactions");
+        gettxbyhash(row){
+            console.log(row);
+            location.href = "TxDetail.html?searchname=" + row;
         }
-
     }
 })
