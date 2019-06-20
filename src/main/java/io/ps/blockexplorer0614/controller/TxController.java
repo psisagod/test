@@ -17,6 +17,7 @@ import java.util.List;
 @CrossOrigin
 @EnableAutoConfiguration
 public class TxController {
+
     @Autowired
     private TxService txService;
     @Autowired
