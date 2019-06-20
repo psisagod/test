@@ -29,22 +29,17 @@ public class BlockController {
     private BitcoinJsonRpcClientAPI bitcoinJsonRpcClientAPI;
     @Autowired
     private BlockService blockService;
+
     @GetMapping("/getRecentBlocks")
     public List<BlockListDTO> getRecentBlocks() throws Throwable {
         List<BlockListDTO> recentBlocks = blockService.getRecentBlocks();
         return recentBlocks;
     }
-    @GetMapping("/searchBlock")
-    public BlockGetDTO search(@RequestParam(required = false)Integer blockheight,@RequestParam(required = false)String blockhash) throws Throwable {
-        JSONObject jsonObject = null;
-        if(blockheight != null && !blockheight.equals("")){
-            String blockhashbyheight = bitcoinJsonRpcClientAPI.getBlockHashByHeight(blockheight);
-            jsonObject = bitcoinRestAPI.getBlock(blockhashbyheight);
-        }
-        if(blockhash != null && !blockhash.equals("")){
-            jsonObject = bitcoinRestAPI.getBlock(blockhash);
-        }
 
+    //searchBlockByBlockHeight
+    public BlockGetDTO searchBlockByBlockHeight(@RequestParam(required = false)Integer blockheight) throws Throwable {
+        String blockhashbyheight = bitcoinJsonRpcClientAPI.getBlockHashByHeight(blockheight);
+        JSONObject jsonObject = bitcoinRestAPI.getBlock(blockhashbyheight);
         BlockGetDTO blockGetDTO = new BlockGetDTO();
         blockGetDTO.setNumber_of_transactions(jsonObject.getInteger("confirmations"));
         blockGetDTO.setDifficulty(jsonObject.getDouble("difficulty"));
@@ -66,7 +61,30 @@ public class BlockController {
         //blockGetDTO.setRelayed_by();
         return blockGetDTO;
     }
-
+    //searchBlockByBlockHash
+    public BlockGetDTO searchBlockByBlockHash(@RequestParam(required = false)String blockhash) throws Throwable {
+        JSONObject jsonObject = bitcoinRestAPI.getBlock(blockhash);
+        BlockGetDTO blockGetDTO = new BlockGetDTO();
+        blockGetDTO.setNumber_of_transactions(jsonObject.getInteger("confirmations"));
+        blockGetDTO.setDifficulty(jsonObject.getDouble("difficulty"));
+        blockGetDTO.setBits(jsonObject.getString("bits"));
+        blockGetDTO.setHash(jsonObject.getString("hash"));
+        blockGetDTO.setHeight(jsonObject.getInteger("height"));
+        blockGetDTO.setNonce(jsonObject.getLong("nonce"));
+        blockGetDTO.setPrevious_block(jsonObject.getString("previousblockhash"));
+        blockGetDTO.setSize(jsonObject.getDouble("size"));
+        //blockGetDTO.setTransaction_fees();
+        blockGetDTO.setVersion(jsonObject.getString("versionHex"));
+        blockGetDTO.setWeight(jsonObject.getDouble("weight"));
+        //blockGetDTO.setBlock_reward();块奖励
+        //blockGetDTO.setEstimated_transaction_volume();估计交易金额
+        //blockGetDTO.setMerkle_root();根
+        //blockGetDTO.setOutput_total();输出总量
+        //blockGetDTO.setReceived_time();
+        //blockGetDTO.setTimestamp();
+        //blockGetDTO.setRelayed_by();
+        return blockGetDTO;
+    }
 //    @GetMapping("/getblockbyheight")
 //    public List<BlockGetDTO> getblockbyheight(@RequestParam(required = false)Integer blockheight,@RequestParam(required = false)String blockhash) throws Throwable {
 //        String blockhashbyheight = bitcoinJsonRpcClientAPI.getBlockHashByHeight(blockheight);
@@ -101,7 +119,7 @@ public class BlockController {
 //        blockGetDTO.setPrevBlcok(block.getString("previousblockhash"));
 //        return blockGetDTO;
 //    }
-    //----------------------------------------------------------------------------------------
+    //Rpc Api----------------------------------------------------------------------------------------
 
     @GetMapping("/getBestblockHash")
     public String getBestblockHash() throws Throwable {
@@ -126,7 +144,7 @@ public class BlockController {
     public JSONObject getRawTransaxtion(String txid) throws Throwable {
         return bitcoinJsonRpcClientAPI.getRawTransaxtion(txid);
     }
-    //--------------------------------------------------------------------------------------------
+    //Rest Api--------------------------------------------------------------------------------------------
 
     @GetMapping("/getChainInfo")
     public JSONObject getChainInfo(){
@@ -139,7 +157,7 @@ public class BlockController {
     }
     @GetMapping("/getTransaction")
     public JSONObject getTransaction(){
-        return bitcoinRestAPI.getTransaction("576eaa78b49a1c961086abb51e7cfd316703ed4ca05a7296a9ce2cb75106b7c5");
+        return bitcoinRestAPI.getTransaction("f0315ffc38709d70ad5647e22048358dd3745f3ce3874223c80a7c92fab0c8ba");
     }
 
     @GetMapping("/getNoTxBlock")

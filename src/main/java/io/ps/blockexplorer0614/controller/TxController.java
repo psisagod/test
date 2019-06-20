@@ -35,7 +35,9 @@ public class TxController {
         //txGetDTO.setReceived_time();
         txGetDTO.setLock_time(jsonObject.getLong("locktime"));
         //txGetDTO.setVisualize();
-//        txGetDTO.setTotal_input();
+//
+//
+// txGetDTO.setTotal_input();
 //        txGetDTO.setTotal_output();
 //        txGetDTO.setFees();
 //        txGetDTO.setFee_per_byte();
