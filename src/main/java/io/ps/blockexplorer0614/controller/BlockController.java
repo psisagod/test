@@ -34,7 +34,7 @@ public class BlockController {
         List<BlockListDTO> recentBlocks = blockService.getRecentBlocks();
         return recentBlocks;
     }
-    @GetMapping("/search")
+    @GetMapping("/searchBlock")
     public BlockGetDTO search(@RequestParam(required = false)Integer blockheight,@RequestParam(required = false)String blockhash) throws Throwable {
         JSONObject jsonObject = null;
         if(blockheight != null && !blockheight.equals("")){
@@ -101,7 +101,6 @@ public class BlockController {
 //        blockGetDTO.setPrevBlcok(block.getString("previousblockhash"));
 //        return blockGetDTO;
 //    }
-
     //----------------------------------------------------------------------------------------
 
     @GetMapping("/getBestblockHash")
@@ -167,9 +166,6 @@ public class BlockController {
     public JSONObject getUTXO(){
         return bitcoinRestAPI.getUTXO("c8ef72695507f4d946bb4193fa364f364dce98c8087443fe532516af92e0070a",5);
     }
-
-
-
 
 //    @GetMapping("/getByHeight")
 //    public BlockGetDTO getByHeight(@RequestParam Integer height){

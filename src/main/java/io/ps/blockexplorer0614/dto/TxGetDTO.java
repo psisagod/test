@@ -2,8 +2,8 @@ package io.ps.blockexplorer0614.dto;
 
 public class TxGetDTO {
 
-    private Short size;
-    private Integer weight;
+    private Double size;
+    private Double weight;
     private Long received_time;
     private Long lock_time;
     private String visualize;
@@ -15,19 +15,19 @@ public class TxGetDTO {
     private Double estimated_btc_transacted;
 
 
-    public Short getSize() {
+    public Double getSize() {
         return size;
     }
 
-    public void setSize(Short size) {
+    public void setSize(Double size) {
         this.size = size;
     }
 
-    public Integer getWeight() {
+    public Double getWeight() {
         return weight;
     }
 
-    public void setWeight(Integer weight) {
+    public void setWeight(Double weight) {
         this.weight = weight;
     }
 
