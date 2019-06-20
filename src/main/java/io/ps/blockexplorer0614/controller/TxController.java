@@ -31,6 +31,7 @@ public class TxController {
     public TxGetDTO searchTx(@RequestParam String txhash){
         TxGetDTO txGetDTO = new TxGetDTO();
         JSONObject jsonObject = bitcoinRestAPI.getTransaction(txhash);
+        txGetDTO.setTxhash(jsonObject.getString("hash"));
         txGetDTO.setSize(jsonObject.getDouble("size"));
         txGetDTO.setWeight(jsonObject.getDouble("weight"));
         //txGetDTO.setReceived_time();

@@ -1,7 +1,7 @@
 package io.ps.blockexplorer0614.dto;
 
 public class TxGetDTO {
-
+    private String txhash;
     private Double size;
     private Double weight;
     private Long received_time;
@@ -14,6 +14,13 @@ public class TxGetDTO {
     private Double fee_per_weight_unit;
     private Double estimated_btc_transacted;
 
+    public String getTxhash() {
+        return txhash;
+    }
+
+    public void setTxhash(String txhash) {
+        this.txhash = txhash;
+    }
 
     public Double getSize() {
         return size;
