@@ -13,9 +13,10 @@ public class BitcoinScheduler {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private BlockService blockService;
-    @Scheduled(fixedRate = 3000)
+
     @Async
-    public void syncData(){
+    @Scheduled(fixedRate = 3000)
+    public void syncData() {
 
         //logger.info("begin to sync bitcoin data");
     }

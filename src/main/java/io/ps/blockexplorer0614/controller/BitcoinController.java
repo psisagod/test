@@ -20,14 +20,17 @@ public class BitcoinController {
 
         if(searchname.length()==34){
 
-        }
-        if(searchname.length()<7){
-            BlockGetDTO blockGetDTOByHeight  = blockController.searchBlockByBlockHeight(Integer.parseInt(searchname));
-            if(blockGetDTOByHeight != null){
-                return blockGetDTOByHeight;
+        }else if(searchname.length()<7){
+            try {
+                int height = Integer.parseInt(searchname);
+                BlockGetDTO blockGetDTOByHeight  = blockController.searchBlockByBlockHeight(height);
+                if(blockGetDTOByHeight != null){
+                    return blockGetDTOByHeight;
+                }
+            }catch (Exception e){
+                throw  new Exception("Please enter an address, transaction hash, block height or hash");
             }
-        }
-        if(searchname.length()==64){
+        }else if(searchname.length()==64){
             try {
                 BlockGetDTO blockGetDTOByHash  = blockController.searchBlockByBlockHash(searchname);
                 if(blockGetDTOByHash != null){
@@ -35,13 +38,14 @@ public class BitcoinController {
                 }
             }
             catch (Exception e){
-                System.out.println(e.getStackTrace());
+                //todo Custom Exception
             }
-
             TxGetDTO  txGetDTO = txController.searchTx(searchname);
             if(txGetDTO != null){
                 return txGetDTO;
             }
+        }else{
+            throw new Exception("Please enter an address, transaction hash, block height or hash");
         }
         return null;
     }

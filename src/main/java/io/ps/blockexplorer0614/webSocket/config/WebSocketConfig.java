@@ -9,7 +9,7 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistra
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 
 @Configuration
-@EnableWebSocket
+//@EnableWebSocket
 public class WebSocketConfig implements WebSocketConfigurer {
 
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
