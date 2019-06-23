@@ -153,7 +153,7 @@
         </div>
         <div class="div4">
             <template>
-                <el-tabs v-model="activeName" @tab-click="handleClick">
+                <el-tabs @tab-click="handleClick">
                     <el-tab-pane label="Blocks" name="first">
                             <el-table :data="recentBlocks" stripe style="width:100%">
                                     <el-table-column prop="height" label="Height">
@@ -204,6 +204,8 @@
                 <script src="assets/js/common.js"></script>
                 <script src="assets/js/vue.js"></script>
                 <script src="assets/js/elementui.js"></script>
+                <script src="assets/js/sockjs.js"></script>
+                <script src="assets/js/stomp.min.js"></script>
                 <script src="viewmodels/BlocksRecent.js"></script>
 
 </body>
