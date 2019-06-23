@@ -37,4 +37,14 @@ public class TxListDTO {
     public void setAmount_usd(Double amount_usd) {
         this.amount_usd = amount_usd;
     }
+
+    @Override
+    public String toString() {
+        return "TxListDTO{" +
+                "transaction_hash='" + transaction_hash + '\'' +
+                ", age=" + age +
+                ", amount_eth=" + amount_eth +
+                ", amount_usd=" + amount_usd +
+                '}';
+    }
 }
