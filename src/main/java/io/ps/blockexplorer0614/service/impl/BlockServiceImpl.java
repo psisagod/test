@@ -48,10 +48,32 @@ public class BlockServiceImpl implements BlockService {
         return blockListDTOS;
     }
 
-    @Override
-    public List<BlockGetDTO> getblockbyheight(Integer blockheight) {
-        BlockGetDTO blockGetDTO = new BlockGetDTO();
 
-        return null;
+    @Override
+    public List<BlockListDTO> getMoreBlocks() {
+        int i = 0;
+        ArrayList<BlockListDTO> blockListDTOS = new ArrayList<>();
+        List<Transacation> txs = transacationMapper.getMoreTxs();
+        List<Block> blocks = blockMapper.getMoreBlocks();
+        String transactionsAll = "";
+        for (Transacation tx : txs) {
+            transactionsAll += tx.getConfirmations()+",";
+        }
+        transactionsAll=transactionsAll.substring(0,transactionsAll.length()-1);
+        String transaction[]=transactionsAll.split(",");
+        for(Block block : blocks){
+            BlockListDTO blockListDTO = new BlockListDTO();
+            blockListDTO.setHeight(block.getHeight());
+            Long time = block.getTime().getTime();
+            Long leadtime = new Date().getTime()-time;
+            Integer minutes = Math.toIntExact(leadtime / 1000 / 60);
+            blockListDTO.setAge(minutes);
+            blockListDTO.setMiner("ps");
+            blockListDTO.setSize( block.getSize());
+            blockListDTO.setTransactions(Integer.parseInt(transaction[i]));
+            blockListDTOS.add(blockListDTO);
+            i++;
+        }
+        return blockListDTOS;
     }
 }

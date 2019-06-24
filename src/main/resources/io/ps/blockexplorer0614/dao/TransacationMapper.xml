@@ -132,4 +132,11 @@
     order by time desc
     limit 5
   </select>
+  <select id="getMoreTxs" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from transacation
+    order by time desc
+    limit 15
+  </select>
 </mapper>

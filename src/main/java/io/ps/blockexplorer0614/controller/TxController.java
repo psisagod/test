@@ -27,6 +27,11 @@ public class TxController {
         List<TxListDTO> txListDTOS = txService.getRecentTxs();
         return txListDTOS;
     }
+    @GetMapping("/getMoreTxs")
+    public List<TxListDTO> getMoreTxs(){
+        List<TxListDTO> txListDTOS = txService.getMoreTxs();
+        return txListDTOS;
+    }
     @GetMapping("/searchTx")
     public TxGetDTO searchTx(@RequestParam String txhash){
         TxGetDTO txGetDTO = new TxGetDTO();

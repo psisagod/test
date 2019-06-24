@@ -18,4 +18,6 @@ public interface TransacationMapper {
     int updateByPrimaryKey(Transacation record);
 
     List<Transacation> selectRecentTxs();
+
+    List<Transacation> getMoreTxs();
 }

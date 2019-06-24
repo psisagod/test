@@ -43,6 +43,8 @@ public class BitcoinServiceImpl implements BitcoinService {
 
     @Autowired
     private BitcoinJsonRpcClientAPI bitcoinJsonRpcClientAPI;
+    private Double voutAmount = 0.0;
+    private Double vinAmount = 0.0;
 
     @Async
     @Override
@@ -54,7 +56,7 @@ public class BitcoinServiceImpl implements BitcoinService {
             Block block = new Block();
             block.setBlockhash(blockJson.getString("hash"));
             block.setHeight(blockJson.getInteger("height"));
-            if(block.getHeight()>2000){
+            if(blockJson.getInteger("height")>1404){
                 break;
             }
             Long time = blockJson.getLong("time");
@@ -87,8 +89,11 @@ public class BitcoinServiceImpl implements BitcoinService {
         tx.setSize(txJson.getInteger("size"));
         tx.setWeight(txJson.getFloat("weight"));
         tx.setConfirmations(confirmations);
+        Double amout = voutAmount + vinAmount;
+        tx.setAmout(amout);
         transacationMapper.insert(tx);
         syncTxDetail(txJson);
+
         //todo set tx amount
     }
     @Async
@@ -110,6 +115,7 @@ public class BitcoinServiceImpl implements BitcoinService {
             JSONObject jsonObject = new JSONObject((LinkedHashMap) vout);
             JSONObject scriptPubKey =jsonObject.getJSONObject("scriptPubKey");
             Double amount = jsonObject.getDouble("value");
+            voutAmount = amount;
             tx_detall.setAmount(amount);
             String addresses = scriptPubKey.getString("addresses");
             tx_detall.setAdress(addresses);
@@ -130,6 +136,7 @@ public class BitcoinServiceImpl implements BitcoinService {
 //            tx_detall.setTxhash(txhashOrigin);
 //            tx_detall.setType((byte) TxDerailType.Send.ordinal());
 //            Double amount = jsonObject.getDouble("value");
+//            vinAmount = amount;
 //        }
 //        tx_detallMapper.insert(tx_detall);
     }

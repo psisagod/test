@@ -9,5 +9,5 @@ public interface BlockService {
 
     List<BlockListDTO> getRecentBlocks();
 
-    List<BlockGetDTO> getblockbyheight(Integer blockheight);
+    List<BlockListDTO> getMoreBlocks();
 }

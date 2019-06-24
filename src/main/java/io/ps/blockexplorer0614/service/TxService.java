@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface TxService {
     List<TxListDTO> getRecentTxs();
+
+    List<TxListDTO> getMoreTxs();
 }

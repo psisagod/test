@@ -27,8 +27,25 @@ public class TxServiceImpl implements TxService {
             Long leadtime = new Date().getTime()-time;
             Integer minutes = Math.toIntExact(leadtime / 1000 / 60);
             txListDTO.setAge(minutes);
-            //todo txListDTO.setAmount_eth();
-            //todo txListDTO.setAmount_usd();
+            txListDTO.setAmount_eth(tx.getAmout());
+            txListDTO.setAmount_usd(tx.getAmout()*11111);
+            txListDTOS.add(txListDTO);
+        }
+        return txListDTOS;
+    }
+    @Override
+    public List<TxListDTO> getMoreTxs() {
+        ArrayList<TxListDTO> txListDTOS = new ArrayList<>();
+        List<Transacation> txs = transacationMapper.getMoreTxs();
+        for (Transacation tx : txs) {
+            TxListDTO txListDTO = new TxListDTO();
+            txListDTO.setTransaction_hash(tx.getTxhash());
+            Long time = tx.getTime().getTime();
+            Long leadtime = new Date().getTime()-time;
+            Integer minutes = Math.toIntExact(leadtime / 1000 / 60);
+            txListDTO.setAge(minutes);
+            txListDTO.setAmount_eth(tx.getAmout());
+            txListDTO.setAmount_usd(tx.getAmout()*11111);
             txListDTOS.add(txListDTO);
         }
         return txListDTOS;

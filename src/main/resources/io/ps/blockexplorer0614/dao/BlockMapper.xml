@@ -157,4 +157,12 @@
     order by height desc
     limit 5
   </select>
+
+  <select id="getMoreBlocks" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from block
+    order by height desc
+    limit 10
+  </select>
 </mapper>
