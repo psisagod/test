@@ -29,7 +29,6 @@ var app = new Vue({
                     // handle success
                     console.log(response);
                     app.recentBlocks = response.data;
-
                 })
                 .catch(function (error) {
                     // handle error
@@ -67,7 +66,9 @@ var app = new Vue({
             console.log(val);
         },
         search() {
-            location.href = "BlockDetail.html?searchname=" + this.searchname;
+            if(this.searchname.length>10){
+                location.href = "BlockDetail.html?searchname=" + this.searchname;
+            }
         },
         getblockbyheight(row){
             console.log(row);
@@ -76,6 +77,12 @@ var app = new Vue({
         gettxbyhash(row){
             console.log(row);
             location.href = "TxDetail.html?searchname=" + row;
+        },
+        BlockviewMoreClick(){
+            location.href = "MoreBlocks.html";
+        },
+        TxviewMoreClick(){
+            location.href = "MoreTxs.html";
         }
     }
 })

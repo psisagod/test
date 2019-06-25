@@ -30,7 +30,7 @@
             max-width: 70%;
             height: 0px;
             overflow: hidden;
-            padding-bottom: 30%;
+            padding-bottom: 27%;
             margin-left: 15%;
             border-style: solid;
             position: relative;
@@ -152,7 +152,7 @@
             </el-row>
         </div>
         <div class="div4">
-            <template>
+            <el-main>
                 <el-tabs @tab-click="handleClick">
                     <el-tab-pane label="Blocks" name="first">
                             <el-table :data="recentBlocks" stripe style="width:100%">
@@ -169,13 +169,16 @@
                                     </el-table-column>
                                     <el-table-column prop="size" label="Size (bytes)">
                                     </el-table-column>
-                                </el-table>
+                            </el-table>
+                                <div style="text-align: center">
+                                    <el-button type="primary" @click="BlockviewMoreClick">View More</el-button>
+                                </div>
                     </el-tab-pane>
                     <el-tab-pane label="Transactions" name="second">
                             <el-table :data="recentTxs" stripe style="width:100%">
                                     <el-table-column prop="transaction_hash" label="Transaction Hash" :show-overflow-tooltip="true">
                                         <template slot-scope="scope">
-                                            <a @click="gettxbyhash(scope.row.transaction_hash)">{{scope.row.transaction_hash}}</a>
+                                            <a @click="gettxbyhash(cope.row.transaction_hash)">{{scope.row.transaction_hash}}</a>
                                         </template>
                                     </el-table-column>
                                     <el-table-column prop="age" label="Age">
@@ -185,10 +188,12 @@
                                     <el-table-column prop="amount_usd" label="Amount (USD)">
                                     </el-table-column>
                             </el-table>
-                            <el-button class="view" type="primary" plain>View More</el-button>   
+                            <div style="text-align: center">
+                                <el-button type="primary" @click="TxviewMoreClick">View More</el-button>
+                            </div>
                     </el-tab-pane>
                 </el-tabs>
-            </template>
+            </el-main>
      
         </div>
         <div>
