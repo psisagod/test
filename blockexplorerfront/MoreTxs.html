@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="assets/css/elementui.css">
+    <title>MoreBlocks</title>
+</head>
+<body>
+  <div id="app">
+    <el-table :data="txs" stripe style="width:100%">
+        <el-table-column prop="transaction_hash" label="Transaction Hash" :show-overflow-tooltip="true">
+            <template slot-scope="scope">
+                <a @click="gettxbyhash(cope.row.transaction_hash)">{{scope.row.transaction_hash}}</a>
+            </template>
+        </el-table-column>
+        <el-table-column prop="age" label="Age">
+        </el-table-column>
+        <el-table-column prop="amount_eth" label="Amount (BTC)">
+        </el-table-column>
+        <el-table-column prop="amount_usd" label="Amount (USD)">
+        </el-table-column>
+    </el-table>
+</div>
+    <script src="assets/js/axios.min.js"></script>
+    <script src="assets/js/common.js"></script>
+    <script src="assets/js/vue.js"></script>
+    <script src="assets/js/elementui.js"></script>
+    <script src="viewmodels/MoreTxs.js"></script>
+
+</body>
+
+</html>

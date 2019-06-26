@@ -32,8 +32,8 @@ public class TxController {
         List<TxListDTO> txListDTOS = txService.getMoreTxs();
         return txListDTOS;
     }
-    @GetMapping("/searchTx")
-    public TxGetDTO searchTx(@RequestParam String txhash){
+    @GetMapping("/searchTxByTxhash")
+    public TxGetDTO searchTxByTxhash(@RequestParam String txhash){
         TxGetDTO txGetDTO = new TxGetDTO();
         JSONObject jsonObject = bitcoinRestAPI.getTransaction(txhash);
         txGetDTO.setTxhash(jsonObject.getString("hash"));

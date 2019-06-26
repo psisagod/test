@@ -42,6 +42,7 @@ public class BlockController {
         return recentBlocks;
     }
     //searchBlockByBlockHeight
+    @GetMapping("/searchBlockByBlockHeight")
     public BlockGetDTO searchBlockByBlockHeight(@RequestParam(required = false)Integer blockheight) throws Throwable {
         String blockhashbyheight = bitcoinJsonRpcClientAPI.getBlockHashByHeight(blockheight);
         JSONObject jsonObject = bitcoinRestAPI.getBlock(blockhashbyheight);
@@ -67,6 +68,7 @@ public class BlockController {
         return blockGetDTO;
     }
     //searchBlockByBlockHash
+    @GetMapping("/searchBlockByBlockHash")
     public BlockGetDTO searchBlockByBlockHash(@RequestParam(required = false)String blockhash) throws Throwable {
         JSONObject jsonObject = bitcoinRestAPI.getBlock(blockhash);
         BlockGetDTO blockGetDTO = new BlockGetDTO();

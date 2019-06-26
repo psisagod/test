@@ -16,7 +16,7 @@ public class BitcoinController {
     @Autowired
     private BlockController blockController;
     @GetMapping("/search")
-    public Object search(@RequestParam(required = false)String searchname) throws Throwable {
+    public String search(@RequestParam(required = false)String searchname) throws Throwable {
 
         if(searchname.length()==34){
 
@@ -25,29 +25,34 @@ public class BitcoinController {
                 int height = Integer.parseInt(searchname);
                 BlockGetDTO blockGetDTOByHeight  = blockController.searchBlockByBlockHeight(height);
                 if(blockGetDTOByHeight != null){
-                    return blockGetDTOByHeight;
+                    return "BlockDetail.html?searchname="+searchname;
+                }else {
+                    return "SearchError.html";
                 }
             }catch (Exception e){
-                throw  new Exception("Please enter an address, transaction hash, block height or hash");
+                return "SearchError.html";
             }
+
         }else if(searchname.length()==64){
             try {
                 BlockGetDTO blockGetDTOByHash  = blockController.searchBlockByBlockHash(searchname);
                 if(blockGetDTOByHash != null){
-                    return blockGetDTOByHash;
+                    return "BlockDetail.html?searchname="+searchname;
+                }else {
+                    return "SearchError.html";
                 }
             }
             catch (Exception e){
                 //todo Custom Exception
             }
-            TxGetDTO  txGetDTO = txController.searchTx(searchname);
+            TxGetDTO  txGetDTO = txController.searchTxByTxhash(searchname);
             if(txGetDTO != null){
-                return txGetDTO;
+                return "TxDetail.html?searchname="+searchname;
             }
         }else{
-            throw new Exception("Please enter an address, transaction hash, block height or hash");
+            return "SearchError.html";
         }
-        return null;
+        return "SearchError.html";
     }
 
 

@@ -7,14 +7,14 @@ var app = new Vue({
         console.log('view mounted');
         var url = new URL(location.href);
         var searchname = url.searchParams.get("searchname");
-        this.getBlock(searchname);
+        this.getTx(searchname);
         console.log(searchname);
     },
     methods: {
-        getBlock(searchname) {
-            axios.get('/bitcoin/search', {
+        getTx(searchname) {
+            axios.get('/tx/searchTxByTxhash', {
                 params: {
-                    searchname: searchname
+                    txhash: searchname
                 }
             })
                 .then(function (response) {

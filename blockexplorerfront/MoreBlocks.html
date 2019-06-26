@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="assets/css/elementui.css">
+    <title>MoreBlocks</title>
+</head>
+<body>
+  <div id="app">
+    <el-table :data="blocks" stripe style="width:100%">
+      <el-table-column prop="height" label="Height">
+          <template slot-scope="scope">
+              <a @click="getblockbyheight(scope.row.height)">{{scope.row.height}}</a>
+          </template>
+      </el-table-column>
+      <el-table-column prop="age" label="Age">
+      </el-table-column>
+      <el-table-column prop="transactions" label="Transactions">
+      </el-table-column>
+      <el-table-column prop="miner" label="Miner">
+      </el-table-column>
+      <el-table-column prop="size" label="Size (bytes)">
+      </el-table-column>
+</el-table>
+</div>
+    <script src="assets/js/axios.min.js"></script>
+    <script src="assets/js/common.js"></script>
+    <script src="assets/js/vue.js"></script>
+    <script src="assets/js/elementui.js"></script>
+    <script src="viewmodels/MoreBlocks.js"></script>
+
+</body>
+
+</html>

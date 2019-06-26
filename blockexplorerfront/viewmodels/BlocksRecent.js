@@ -66,9 +66,18 @@ var app = new Vue({
             console.log(val);
         },
         search() {
-            if(this.searchname.length>10){
-                location.href = "BlockDetail.html?searchname=" + this.searchname;
-            }
+            axios.get('/bitcoin/search', {
+                params: {
+                    searchname: this.searchname
+                }
+            })
+                .then(function (response) {
+                    console.log(response.data);
+                    location.href = response.data;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
         },
         getblockbyheight(row){
             console.log(row);
