@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="assets/css/elementui.css">
+    <title>showPage</title>
+    <style type="text/css">
+        .div1 {
+            max-width: 100%;
+            height: 0px;
+            overflow: hidden;
+            padding-bottom: 25%;
+            border-style: solid;
+            position: relative;
+            background-color: rgba(0, 46, 100);
+        }
+        .block {
+            font-size: 35px;
+            position: absolute;
+            top: 80px;
+            left: 620px;
+        }
+
+        .you {
+            font-size: 15px;
+            position: absolute;
+            top: 220px;
+            left: 520px;
+        }
+        .need {
+            font-size: 15px;
+            position: absolute;
+            top: 240px;
+            left: 480px;
+        }
+        .search {
+            position: absolute;
+            top: 176px;
+            left: 1070px;
+        }
+        input {
+            position: absolute;
+            top: 160px;
+            left: 350px;
+        }
+        .end{
+            max-width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <div id="app" class="div0">
+        <div class="div1">
+            <p class="block" style="color:white">Block Explorer</p>
+            <el-input v-model="searchname" placeholder="address,transactionHash,blockHash,blockHeight"
+                style="width: 700px;">
+            </el-input>
+            <el-button class="search" type="primary" style="width: 110px;" @click="search">Search</el-button>
+            <p class="you" style="color:black">Oops! We couldn’t find what you are looking for.</p>
+            <p class="need" style="color:rgba(255, 255, 255, 0.719)">Please enter an address, transaction hash, block height or hash</p>
+        </div>
+        <div>
+            <img class="end" src="img/index/end.png"> 
+        </div>  
+
+
+ </div>           
+                <script src="assets/js/axios.min.js"></script>
+                <script src="assets/js/common.js"></script>
+                <script src="assets/js/vue.js"></script>
+                <script src="assets/js/elementui.js"></script>
+                <script src="assets/js/sockjs.js"></script>
+                <script src="assets/js/stomp.min.js"></script>
+                <script src="viewmodels/SearchError.js"></script>
+
+</body>
+
+</html>
